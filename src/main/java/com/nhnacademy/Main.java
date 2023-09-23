@@ -7,7 +7,9 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import ch.qos.logback.core.net.server.Client;
+import com.nhnacademy.client.Client;
+import com.nhnacademy.server.Sever;
+
 
 public class Main {
     public static void main(String[] args) {
