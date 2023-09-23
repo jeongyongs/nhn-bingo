@@ -8,8 +8,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import com.nhnacademy.client.Client;
-import com.nhnacademy.server.Sever;
-
+import com.nhnacademy.server.Server;
 
 public class Main {
     public static void main(String[] args) {
@@ -35,7 +34,7 @@ public class Main {
             }
 
             if(commandLine.hasOption("s")) {
-                Sever.from(port).run();
+                Server.from(port).run();
             } else {
                 Client.of(hostName, port).run();
             }
