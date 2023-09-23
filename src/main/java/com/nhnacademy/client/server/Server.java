@@ -1,4 +1,4 @@
-package com.nhnacademy;
+package com.nhnacademy.client.server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -39,7 +39,7 @@ public class Server {
     }
 
     private void process() {
-        
+
     }
 
     private void postprocess() throws IOException {
