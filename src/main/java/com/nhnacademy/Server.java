@@ -1,0 +1,51 @@
+package com.nhnacademy;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Server {
+    int port;
+    Socket socket;
+    BufferedReader reader;
+    BufferedWriter writer;
+
+    private Server(int port) {
+        this.port = port;
+    }
+
+    public Server from(int port) {
+        return new Server(port);
+    }
+
+    public void run() {
+        try {
+            preprocess();
+            process();
+            postprocess();
+        } catch (IOException e) {
+        }
+    }
+
+    private void preprocess() throws IOException {
+        ServerSocket serverSocket = new ServerSocket(port);
+        socket = serverSocket.accept();
+        reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+    }
+
+    private void process() {
+        
+    }
+
+    private void postprocess() throws IOException {
+        socket.close();
+        reader.close();
+        writer.close();
+    }
+
+}
