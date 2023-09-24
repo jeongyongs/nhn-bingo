@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+  
     int port;
     Socket socket;
     BufferedReader reader;
@@ -18,7 +19,7 @@ public class Server {
         this.port = port;
     }
 
-    public Server from(int port) {
+    public static Server from(int port) {
         return new Server(port);
     }
 
@@ -47,5 +48,4 @@ public class Server {
         reader.close();
         writer.close();
     }
-
 }
