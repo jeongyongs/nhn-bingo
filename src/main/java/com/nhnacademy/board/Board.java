@@ -77,60 +77,57 @@ public class Board {
         result = new StringBuilder(boardJoiner.toString());
     }
 
-    public void mark(int location, int mark) {
-        result = new StringBuilder();
-        StringJoiner boardJoiner = new StringJoiner("\n");
-
-        int count = 0;
-        for (int i = 0; i < size * size; i++) {
+    private void isDuplicateNum(int location) {
+        for (int i = 0; i < board.length; i++) {
             if (board[i] == location) {
-                // 이미 선택한 곳이면 랜덤 선택
                 if (temp[i] == -1 || temp[i] == -2) {
-                    int num = (int) (Math.random() * (board.length - 1));
-                    while (temp[num] != 0) {
-                        num = (int) Math.random() * (board.length - 1);
+                    throw new DuplicateNumException();
+                }
+            }
+        }
+    }
+
+    public void mark(int location, int mark) {
+        try {
+            isDuplicateNum(location);
+            result = new StringBuilder();
+            StringJoiner boardJoiner = new StringJoiner("\n");
+
+            int count = 0;
+            for (int i = 0; i < size * size; i++) {
+                if (board[i] == location) {
+                    temp[i] = mark;
+                    if (temp[i] == -1) {
+                        result.append("[" + String.format("%02d", board[i]) + "]");
+                        count++;
                     }
-                    message = "이미 표시되어 있는 번호를 선택했으므로 랜덤으로 선택합니다.\n";
-                    mark(num, mark);
-                    continue;
-                }
-                temp[i] = mark;
-                if (mark == -1) {
-                    result.append("[" + String.format("%02d", board[i]) + "]");
-                }
-                if (mark == -2) {
-                    result.append(" " + "XX" + " ");
-                }
-                count++;
-            } else {
-                if (temp[i] == -1) {
-                    result.append("[" + String.format("%02d", board[i]) + "]");
-                    count++;
-                    continue;
-                }
-                if (temp[i] == -2) {
-                    result.append(" " + "XX" + " ");
-                    count++;
-                    continue;
+                    if (temp[i] == -2) {
+                        result.append(" " + "XX" + " ");
+                        count++;
+                    }
                 } else {
                     result.append(" " + String.format("%02d", board[i]) + " ");
                     count++;
                 }
+                if (count != 0 && count % 5 == 0) {
+                    boardJoiner.add(result.toString());
+                    result = new StringBuilder();
+                }
             }
-            if (count != 0 && count % 5 == 0) {
-                boardJoiner.add(result.toString());
-                result = new StringBuilder();
+
+            result = new StringBuilder(boardJoiner.toString());
+            if (mark == -1) {
+                message = "host가 " + location + "을 선택하였습니다.\n";
             }
+            if (mark == -2) {
+                message = "player가 " + location + "을 선택하였습니다.\n";
+            }
+            isBingo(mark);
+        } catch (DuplicateNumException e) {
+            location = (int) (Math.random() * (board.length - 1));
+            mark(location, mark);
         }
 
-        result = new StringBuilder(boardJoiner.toString());
-        isBingo(mark);
-        if (mark == -1) {
-            message = "host가 " + location + "을 선택하였습니다.\n";
-        }
-        if (mark == -2) {
-            message = "player가 " + location + "을 선택하였습니다.\n";
-        }
     }
 
     // 빙고 확인
@@ -138,12 +135,10 @@ public class Board {
         paint();
         if (checkRow(mark) || checkCol(mark) || checkDiagonal(mark)) {
             if (mark == -1) {
-                message = "host가 승리하였습니다!\n";
-                System.out.println(message);
+                message = message + "\n┏━━━━━━━━━━━━━━━━━━┓\n" + "┃    host WINS!    ┃\n" + "┗━━━━━━━━━━━━━━━━━━┛\n";
             }
             if (mark == -2) {
-                message = "player가 승리하였습니다!\n";
-                System.out.println(message);
+                message = message + "\n┏━━━━━━━━━━━━━━━━━━┓\n" + "┃   player WINS!   ┃\n" + "┗━━━━━━━━━━━━━━━━━━┛\n";
             }
         }
         return checkRow(mark) || checkCol(mark) || checkDiagonal(mark);
@@ -203,7 +198,7 @@ public class Board {
                 break;
             }
             if (bool) {
-                for (int j = 0; i < size; j += 6) {
+                for (int j = 0; j < size; j += 6) {
                     temp[j] = -3;
                 }
                 return bool;
@@ -219,7 +214,7 @@ public class Board {
                 }
             }
             if (bool) {
-                for (int j = 0; i < size; j += 6) {
+                for (int j = 0; j < size; j += 6) {
                     temp[j] = -3;
                 }
                 return bool;
@@ -240,21 +235,21 @@ public class Board {
                 25 };
         b.paint();
         System.out.println(b.toString());
-        b.mark(4, -2);
+        b.mark(5, -1);
         System.out.println(b.toString());
-        b.mark(9, -2);
-        System.out.println(b.toString());
-        b.mark(14, -2);
-        System.out.println(b.toString());
-        b.mark(19, -2);
-        System.out.println(b.toString());
-        b.mark(18, -2);
-        System.out.println(b.toString());
-        b.mark(18, -1);
-        System.out.println(b.toString());
-        // b.mark(24, -1);
+        // // b.mark(5, -1);
+        // // System.out.println(b.toString());
+        // b.mark(14, -1);
         // System.out.println(b.toString());
-        // b.mark(24, -2);
+        // b.mark(19, -1);
+        // System.out.println(b.toString());
+        // b.mark(9, -1);
+        // System.out.println(b.toString());
+        // // b.mark(18, -1);
+        // // System.out.println(b.toString());
+        // // b.mark(24, -1);
+        // // System.out.println(b.toString());
+        // b.mark(24, -1);
         // System.out.println(b.toString());
     }
 }
