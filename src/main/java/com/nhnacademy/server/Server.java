@@ -7,9 +7,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import com.nhnacademy.game.BingoGame;
 
 public class Server {
-  
+
     int port;
     Socket socket;
     BufferedReader reader;
@@ -39,7 +40,7 @@ public class Server {
         writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
     }
 
-    private void process() {
+    private void process() throws IOException {
         BingoGame.of(reader, writer).play();
     }
 
