@@ -11,6 +11,9 @@ import com.nhnacademy.client.Client;
 import com.nhnacademy.server.Server;
 
 public class Main {
+    private static final int DEFAULT_PORT = 1234;
+    private static final String DEFAULT_HOSTNAME = "localhost";
+
     public static void main(String[] args) {
         Options options = new Options();
 
@@ -22,9 +25,9 @@ public class Main {
         CommandLine commandLine;
 
         try {
+            int port = DEFAULT_PORT;
+            String hostName = DEFAULT_HOSTNAME;
             commandLine = parser.parse(options, args);
-            int port = 1234;
-            String hostName = "localhost";
             
             if (commandLine.hasOption("p")) {
                 port = Integer.parseInt(commandLine.getOptionValue("p"));
@@ -39,7 +42,7 @@ public class Main {
                 Client.of(hostName, port).run();
             }
             
-        } catch (ParseException e) {
+        } catch (ParseException ignore) {
             System.out.println("잘못된 옵션입니다.");
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("manual", options);
