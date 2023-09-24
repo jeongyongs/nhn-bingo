@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
+  
     int port;
     Socket socket;
     BufferedReader reader;
@@ -39,15 +40,7 @@ public class Server {
     }
 
     private void process() {
-
-
-    }
-
-    private void printToAll(BufferedWriter writer, String message) throws IOException {
-        System.out.println(message);
-        writer.write(message);
-        writer.newLine();
-        writer.flush();
+        BingoGame.of(reader, writer).play();
     }
 
     private void postprocess() throws IOException {
@@ -55,5 +48,4 @@ public class Server {
         reader.close();
         writer.close();
     }
-
 }
