@@ -12,7 +12,7 @@ public class Board {
     private int size = 5;
     private int[] board = new int[size * size];
     private int[] temp = new int[board.length];
-    private char[] bingo = new char[] { 'B', 'I', 'N', 'G', 'O' };
+    private char[] bingo = new char[] {'B', 'I', 'N', 'G', 'O'};
     private StringBuilder result;
     private String message = " 빙고판을 생성합니다.\n";
 
@@ -109,10 +109,12 @@ public class Board {
     public boolean isBingo(int mark) {
         if (checkRow(mark) || checkCol(mark) || checkDiagonal(mark)) {
             if (mark == -1) {
-                message = message + "\n ┏━━━━━━━━━━━━━━━━━━┓\n" + " ┃    host WINS!    ┃\n" + " ┗━━━━━━━━━━━━━━━━━━┛\n";
+                message = message + "\n ┏━━━━━━━━━━━━━━━━━━┓\n" + " ┃    host WINS!    ┃\n"
+                        + " ┗━━━━━━━━━━━━━━━━━━┛\n";
             }
             if (mark == -2) {
-                message = message + "\n ┏━━━━━━━━━━━━━━━━━━┓\n" + " ┃   player WINS!   ┃\n" + " ┗━━━━━━━━━━━━━━━━━━┛\n";
+                message = message + "\n ┏━━━━━━━━━━━━━━━━━━┓\n" + " ┃   player WINS!   ┃\n"
+                        + " ┗━━━━━━━━━━━━━━━━━━┛\n";
             }
             paint();
             return true;
@@ -166,7 +168,7 @@ public class Board {
         return false;
     }
 
-    private boolean  checkDiagonal(int mark) {
+    private boolean checkDiagonal(int mark) {
         return checkDiagonal1(mark) || checkDiagonal2(mark);
     }
 
@@ -189,17 +191,17 @@ public class Board {
         return false;
     }
 
-private boolean checkDiagonal2(int mark) {
+    private boolean checkDiagonal2(int mark) {
         // 대각선 체크
         boolean bool = true;
-        for (int i = 4; i < size * size -1; i += 4) {
+        for (int i = 4; i < size * size - 1; i += 4) {
             if (temp[i] != mark) {
                 bool = false;
                 break;
             }
         }
         if (bool) {
-            for (int j = 4; j < size * size-1; j += 4) {
+            for (int j = 4; j < size * size - 1; j += 4) {
                 temp[j] = -3;
             }
             return bool;
@@ -212,22 +214,4 @@ private boolean checkDiagonal2(int mark) {
     public String toString() {
         return result.toString() + "\n" + message;
     }
-
-    // public static void main(String[] args) {
-    //     Board b = Board.from("random");
-    //     b.board = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
-    //             25 };
-    //     b.paint();
-    //     System.out.println(b.toString());
-    //     b.mark(5, -1);
-    //     System.out.println(b.toString());
-    //     b.mark(9, -1);
-    //     System.out.println(b.toString());
-    //     b.mark(13, -1);
-    //     System.out.println(b.toString());
-    //     b.mark(17, -1);
-    //     System.out.println(b.toString());
-    //     b.mark(21, -1);
-    //     System.out.println(b.toString());
-    // }
 }
