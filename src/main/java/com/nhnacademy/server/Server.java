@@ -1,4 +1,4 @@
-package com.nhnacademy.client.server;
+package com.nhnacademy.server;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
