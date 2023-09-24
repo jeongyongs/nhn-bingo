@@ -47,6 +47,5 @@ public class Main {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp("manual", options);
         }
-
     }
 }
