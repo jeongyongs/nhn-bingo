@@ -96,10 +96,12 @@ public class CommandHandler {
         }
         if (command.getString(COMMAND).equals("win")) {
             System.out.println("게임에서 이겼습니다.");
+            Thread.currentThread().interrupt();
             return;
         }
         if (command.getString(COMMAND).equals("lose")) {
             System.out.println("게임에서 졌습니다.");
+            Thread.currentThread().interrupt();
         }
     }
 
