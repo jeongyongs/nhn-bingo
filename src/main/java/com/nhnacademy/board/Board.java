@@ -14,6 +14,7 @@ public class Board {
     private int[] temp = new int[board.length];
     private char[] bingo = new char[] { 'B', 'I', 'N', 'G', 'O' };
     private StringBuilder result;
+    private String message = "빙고판을 생성합니다\n";
 
     private Board(JSONArray jsonArray) {
         for (int i = 0; i < jsonArray.length(); i++) {
@@ -35,6 +36,10 @@ public class Board {
 
     public static Board from(String random) {
         return new Board(random);
+    }
+
+    public String getMessage() {
+        return message;
     }
 
     public void paint() {
@@ -85,10 +90,10 @@ public class Board {
                     while (temp[num] != 0) {
                         num = (int) Math.random() * (board.length - 1);
                     }
+                    message = "이미 표시되어 있는 번호를 선택했으므로 랜덤으로 선택합니다.\n";
                     mark(num, mark);
                     continue;
                 }
-
                 temp[i] = mark;
                 if (mark == -1) {
                     result.append("[" + String.format("%02d", board[i]) + "]");
@@ -120,11 +125,27 @@ public class Board {
 
         result = new StringBuilder(boardJoiner.toString());
         isBingo(mark);
+        if (mark == -1) {
+            message = "host가 " + location + "을 선택하였습니다.\n";
+        }
+        if (mark == -2) {
+            message = "player가 " + location + "을 선택하였습니다.\n";
+        }
     }
 
     // 빙고 확인
     public boolean isBingo(int mark) {
         paint();
+        if (checkRow(mark) || checkCol(mark) || checkDiagonal(mark)) {
+            if (mark == -1) {
+                message = "host가 승리하였습니다!\n";
+                System.out.println(message);
+            }
+            if (mark == -2) {
+                message = "player가 승리하였습니다!\n";
+                System.out.println(message);
+            }
+        }
         return checkRow(mark) || checkCol(mark) || checkDiagonal(mark);
     }
 
@@ -210,7 +231,7 @@ public class Board {
 
     @Override
     public String toString() {
-        return result.toString();
+        return result.toString() + "\n" + message;
     }
 
     public static void main(String[] args) {
@@ -218,12 +239,22 @@ public class Board {
         b.board = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
                 25 };
         b.paint();
-        b.mark(4, -2);
-        b.mark(9, -2);
-        b.mark(14, -2);
-        // b.mark(19, -2);
-        b.mark(24, -1);
-        b.mark(24, -2);
         System.out.println(b.toString());
+        b.mark(4, -2);
+        System.out.println(b.toString());
+        b.mark(9, -2);
+        System.out.println(b.toString());
+        b.mark(14, -2);
+        System.out.println(b.toString());
+        b.mark(19, -2);
+        System.out.println(b.toString());
+        b.mark(18, -2);
+        System.out.println(b.toString());
+        b.mark(18, -1);
+        System.out.println(b.toString());
+        // b.mark(24, -1);
+        // System.out.println(b.toString());
+        // b.mark(24, -2);
+        // System.out.println(b.toString());
     }
 }
