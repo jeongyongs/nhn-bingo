@@ -39,7 +39,7 @@ public class Server {
     }
 
     private void process() {
-
+        BingoGame.of(reader, writer).play();
     }
 
     private void postprocess() throws IOException {
